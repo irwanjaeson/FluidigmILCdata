@@ -106,7 +106,6 @@ anova(fm4)
 #anova(lmer(scores[,4] ~ as.factor(Group) + (1|Experiment), data=df))
 
 #Calculate p values between individual groups
-library(emmeans)
 library(multcomp)
 tukeyPC1 <- summary(glht(fm1, linfct = mcp(Vaccine = "Tukey")), test = adjusted("holm"))
 tukeyPC2 <- summary(glht(fm2, linfct = mcp(Vaccine = "Tukey")), test = adjusted("holm"))
@@ -141,13 +140,13 @@ x1plot<-melt(x1)
 x1plot$Var1 <- factor(x1plot$Var1, levels=names_x1)
 x1plot$Var2 <- factor(x1plot$Var2, levels=rev(names_x1))
 
-tiff('ILC2 correlation heatmap im only cutoff 5.tiff', units="in", width=15, height=12, res=600)
+tiff('ILC2 correlation heatmap im only.tiff', units="in", width=15, height=12, res=600)
 
 ggplot(data =  x1plot, aes(x = Var1, y = Var2)) +
   labs(x = "", y = "") +
   geom_tile(aes(fill = value), colour = "white") +
-  theme(axis.text.x = element_text(size = rel(2), angle = 270, hjust = 0, colour = "grey50", face = "italic")) +
-  theme(axis.text.y = element_text(size = rel(2), vjust = 0, colour = "grey50", face = "italic")) +
+  theme(axis.text.x = element_text(size = rel(2.5), angle = 270, vjust = 0.5, hjust = 0, colour = "black", face = "italic")) +
+  theme(axis.text.y = element_text(size = rel(2.5), hjust = 1, vjust = 0.5, colour = "black", face = "italic")) +
   geom_text(aes(label = sprintf("%0.2f",value)), cex=6,vjust = 0.5) +
   scale_fill_gradient2(low="darkblue", mid="white", high="red", limits = c(-1,1)) +
   theme(legend.text = element_text(size = 8), legend.text.align = 0.5) +
